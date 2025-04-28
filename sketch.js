@@ -13,7 +13,7 @@ function setup() {
 
     // 建立與攝影機影像相同大小的 graphics
     graphics = createGraphics(capture.width, capture.height);
-    // graphics.background(255, 0, 0, 100); // 設定 graphics 的背景為半透明紅色
+    graphics.background(255, 0, 0, 100); // 設定 graphics 的背景為半透明紅色
     graphics.fill(255);
     graphics.textSize(20);
     graphics.textAlign(CENTER, CENTER);
