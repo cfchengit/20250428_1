@@ -13,11 +13,6 @@ function setup() {
 
     // 建立與攝影機影像相同大小的 graphics
     graphics = createGraphics(capture.width, capture.height);
-    graphics.background(255, 0, 0, 100); // 設定 graphics 的背景為半透明紅色
-    graphics.fill(255);
-    graphics.textSize(20);
-    graphics.textAlign(CENTER, CENTER);
-    graphics.text('這是我的影像', graphics.width / 2, graphics.height / 2); // 在 graphics 上繪製文字
 }
 
 function draw() {
@@ -30,6 +25,18 @@ function draw() {
     scale(-1, 1); // 左右翻轉影像
     image(capture, -capture.width / 2, -capture.height / 2, capture.width, capture.height);
     pop();
+
+    // 更新 graphics
+    graphics.background(0); // 設定背景為黑色
+    for (let x = 0; x < graphics.width; x += 20) {
+        for (let y = 0; y < graphics.height; y += 20) {
+            // 從攝影機影像中取得顏色
+            let col = capture.get(x, y);
+            graphics.fill(col);
+            graphics.noStroke();
+            graphics.ellipse(x + 10, y + 10, 15, 15); // 繪製圓形，寬高為 15
+        }
+    }
 
     // 將 graphics 顯示在攝影機影像上方
     image(graphics, (width - capture.width) / 2, (height - capture.height) / 2);
