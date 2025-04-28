@@ -32,10 +32,14 @@ function draw() {
         for (let y = 0; y < graphics.height; y += 20) {
             // 從攝影機影像中取得顏色
             let col = capture.get(x, y);
-            let gray = (red(col) + green(col) + blue(col)) / 3; // 計算灰階值
-            graphics.fill(gray);
+            let g = green(col); // 取得 G 值
+            graphics.fill(0, g, 100); // 設定方框顏色，R 為 0，B 固定為 100
             graphics.noStroke();
-            graphics.ellipse(x + 10, y + 10, 15, 15); // 繪製圓形，寬高為 15
+            graphics.rect(x + 1, y + 1, 18, 18); // 繪製方框，寬高為 18
+
+            // 在方框中間繪製黑色圓
+            graphics.fill(0); // 圓的顏色為黑色
+            graphics.ellipse(x + 10, y + 10, 5, 5); // 繪製圓形，寬高為 5
         }
     }
 
