@@ -1,5 +1,6 @@
 let capture;
 let graphics;
+const density = 'Ñ@#W$9876543210?!abc;:+=-,._ '; // 定義字串密度
 
 function setup() {
     // 產生全視窗的畫布，背景顏色為 #dde5b6
@@ -13,6 +14,9 @@ function setup() {
 
     // 建立與攝影機影像相同大小的 graphics
     graphics = createGraphics(capture.width, capture.height);
+    graphics.textFont('monospace'); // 設定字型
+    graphics.textSize(10); // 設定文字大小
+    graphics.textAlign(CENTER, CENTER); // 文字置中
 }
 
 function draw() {
@@ -28,18 +32,16 @@ function draw() {
 
     // 更新 graphics
     graphics.background(0); // 設定背景為黑色
-    for (let x = 0; x < graphics.width; x += 20) {
-        for (let y = 0; y < graphics.height; y += 20) {
+    for (let x = 0; x < graphics.width; x += 10) {
+        for (let y = 0; y < graphics.height; y += 10) {
             // 從攝影機影像中取得顏色
             let col = capture.get(x, y);
-            let g = green(col); // 取得 G 值
-            graphics.fill(0, g, 100); // 設定方框顏色，R 為 0，B 固定為 100
+            let gray = (red(col) + green(col) + blue(col)) / 3; // 計算灰階值
+            let charIndex = floor(map(gray, 0, 255, density.length - 1, 0)); // 將灰階值對應到字串索引
+            let char = density.charAt(charIndex); // 取得對應的字符
+            graphics.fill(255); // 設定文字顏色為白色
             graphics.noStroke();
-            graphics.rect(x + 1, y + 1, 18, 18); // 繪製方框，寬高為 18
-
-            // 在方框中間繪製黑色圓
-            graphics.fill(0); // 圓的顏色為黑色
-            graphics.ellipse(x + 10, y + 10, 5, 5); // 繪製圓形，寬高為 5
+            graphics.text(char, x + 5, y + 5); // 在單位格中心繪製字符
         }
     }
 
