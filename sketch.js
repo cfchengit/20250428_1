@@ -32,7 +32,8 @@ function draw() {
         for (let y = 0; y < graphics.height; y += 20) {
             // 從攝影機影像中取得顏色
             let col = capture.get(x, y);
-            graphics.fill(col);
+            let gray = (red(col) + green(col) + blue(col)) / 3; // 計算灰階值
+            graphics.fill(gray);
             graphics.noStroke();
             graphics.ellipse(x + 10, y + 10, 15, 15); // 繪製圓形，寬高為 15
         }
