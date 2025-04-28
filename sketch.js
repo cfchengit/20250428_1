@@ -12,8 +12,15 @@ function setup() {
 }
 
 function draw() {
-    // 將攝影機影像顯示在視窗中間
-    image(capture, (width - capture.width) / 2, (height - capture.height) / 2);
+    // 將畫布背景設為 #dde5b6
+    background('#dde5b6');
+
+    // 將攝影機影像左右顛倒後顯示在視窗中間
+    push();
+    translate(width / 2, height / 2); // 將原點移到畫布中心
+    scale(-1, 1); // 左右翻轉影像
+    image(capture, -capture.width / 2, -capture.height / 2, capture.width, capture.height);
+    pop();
 }
 
 function windowResized() {
